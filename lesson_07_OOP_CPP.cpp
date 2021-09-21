@@ -8,6 +8,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
+#include <memory>
 using namespace std;
 //----------------------------------------------------------------------------
 //#define NDEBUG
@@ -34,9 +35,51 @@ using namespace std;
 выведите соответствующую информацию об этом в консоль.
 //*/
 
+class Date
+{
+private:
+  int day,month,year;
+public:
+  Date(int aDay = 0,int aMonth = 0,int aYear = 0)
+    :day(aDay),month(aMonth),year(aYear){}
+  int getDate() const {return day;}
+  int getMonth() const {return month;}
+  int getYear() const {return year;}
+
+  friend std::ostream& operator<<(std::ostream& out, const Date &date);
+};
+
+std::ostream& operator<<(std::ostream& out, const Date &date)
+{
+  out << date.day << "."
+      << date.month << "."
+      << date.year;
+  return out;
+}
+
 void task_1()
 {
   cout << "Task 1\n" << endl;
+
+  std::shared_ptr<Date> today = std::make_shared<Date>(21,9,2021);
+  std::shared_ptr<Date> date;
+
+  cout << "Day: " << today->getDate() << endl;
+  cout << "Month: " << today->getMonth() << endl;
+  cout << "Year: " << today->getYear() << endl;
+  cout << "Today: " << *today << endl;
+
+  date = std::move(today);
+
+  if(today == nullptr)
+    cout << "Pionter 'today' equals nullptr." << endl;
+  else
+    cout << "Pionter 'today' does not equal nullptr." << endl;
+
+  if(date == nullptr)
+    cout << "'today' pointer equals nullptr." << endl;
+  else
+    cout << "'date' pointer does not equal nullptr." << endl;
 
   cout << endl;
 }
