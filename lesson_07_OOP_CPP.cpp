@@ -98,6 +98,98 @@ void task_1()
 переданные ей в качестве параметров.
 //*/
 
+std::shared_ptr<Date> compareDate(std::shared_ptr<Date>& date1, std::shared_ptr<Date>& date2)
+{
+  if(date1->getYear() < date2->getYear())
+    return date1;
+  else if(date1->getYear() > date2->getYear())
+    return date2;
+
+  if(date1->getMonth() < date2->getMonth())
+    return date1;
+  else if(date1->getMonth() > date2->getMonth())
+    return date2;
+
+  if(date1->getDate() < date2->getDate())
+    return date1;
+  else if(date1->getDate() > date2->getDate())
+    return date2;
+
+  return date1;
+}
+
+void swapDate(std::shared_ptr<Date>& date1, std::shared_ptr<Date>& date2)
+{
+  std::shared_ptr<Date> tmp = std::move(date1);
+  date1 = std::move(date2);
+  date2 = std::move(tmp);
+}
+
+void task_2()
+{
+  cout << "Task 2\n" << endl;
+
+  std::shared_ptr<Date> date1;
+  std::shared_ptr<Date> date2;
+
+  cout << "Test 1\n" << endl;
+
+  date1 = std::make_shared<Date>(21,9,2021);
+  date2 = std::make_shared<Date>(21,9,2022);
+
+  cout << "Date1: " << *date1 << endl;
+  cout << "Date2: " << *date2 << endl;
+
+  cout << "The latest date: " << *compareDate(date1,date2) << endl;
+
+  cout << "\nTest 2\n" << endl;
+
+  date1 = std::make_shared<Date>(21,9,2021);
+  date2 = std::make_shared<Date>(21,10,2021);
+
+  cout << "Date1: " << *date1 << endl;
+  cout << "Date2: " << *date2 << endl;
+
+  cout << "The latest date: " << *compareDate(date1,date2) << endl;
+
+  cout << "\nTest 3\n" << endl;
+
+  date1 = std::make_shared<Date>(21,9,2021);
+  date2 = std::make_shared<Date>(20,9,2021);
+
+  cout << "Date1: " << *date1 << endl;
+  cout << "Date2: " << *date2 << endl;
+
+  cout << "The latest date: " << *compareDate(date1,date2) << endl;
+
+  cout << "\nTest 4\n" << endl;
+
+  date1 = std::make_shared<Date>(21,9,2021);
+  date2 = std::make_shared<Date>(21,9,2021);
+
+  cout << "Date1: " << *date1 << endl;
+  cout << "Date2: " << *date2 << endl;
+
+  cout << "The latest date: " << *compareDate(date1,date2) << endl;
+
+  cout << "\nTest 5\n" << endl;
+
+  date1 = std::make_shared<Date>(3,5,2010);
+  date2 = std::make_shared<Date>(21,9,2021);
+
+  cout << "Date1=" << *date1;
+  cout << " and date2=" << *date2 << endl;
+
+  swapDate(date1,date2);
+
+  cout << "Date1=" << *date1;
+  cout << " and date2=" << *date2
+       << " after swaping." << endl;
+
+  cout << endl;
+}
+
+//----------------------------------------------------------------------------
 /*
 3. Создать класс Deck,
 который наследует от класса Hand и
@@ -152,6 +244,16 @@ int main(int argc, char *argv[])
   // Task 1
   //*
   task_1();
+  //*/
+  //----------------------------------------------------------------------------
+  // Task 2
+  //*
+  task_2();
+  //*/
+  //----------------------------------------------------------------------------
+  // Task 3
+  /*
+  task_3();
   //*/
   //----------------------------------------------------------------------------
   return a.exec();
