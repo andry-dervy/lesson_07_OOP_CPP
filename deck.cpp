@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <functional>
 #include "deck.h"
 
 namespace blackjack
@@ -7,7 +8,18 @@ namespace blackjack
   Deck::Deck()
     : countCards(0)
   {
-    Populate();
+  }
+
+  Deck::~Deck()
+  {
+    for(auto& c: cards)
+    {
+      if(c != nullptr)
+      {
+        delete c;
+        c = nullptr;
+      }
+    }
   }
 
   void Deck::Populate()
@@ -49,24 +61,40 @@ namespace blackjack
     }
   }
 
+  int Rand(int n)
+  {
+    srand( time(0) );
+    return rand()%n;
+  }
+
   void Deck::Shuffle()
   {
-    std::random_shuffle(cards.begin(),cards.end());
+    cards.clear();
+    Populate();
+    std::random_shuffle(cards.begin(),cards.end(),
+                        Rand);
+    countCards = 0;
   }
 
   void Deck::Deal(Hand& aHand)
   {
     if(countCards == SIZE_FULL_DECK)
       return;
-
+    cards[countCards]->Flip();
     aHand.Add(cards[countCards]);
     ++countCards;
   }
 
-  void Deck::AddltionalCards(GenericPlayer& aGenericPlayer)
+  bool Deck::AdditionalCards(GenericPlayer& aGenericPlayer)
   {
+    if(aGenericPlayer.getTotal() >= 21)
+      return false;
     if(aGenericPlayer.IsHitting())
+    {
       Deal(aGenericPlayer);
+      return true;
+    }
+    return false;
   }
 
 }

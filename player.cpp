@@ -31,7 +31,7 @@ namespace blackjack
   {
     while(true)
     {
-      std::cout << "Do you need a new card?" << std::endl;
+      std::cout << "Does " << getName() << " need a new card?" << std::endl;
       std::string answer;
       std::cin >> answer;
 
@@ -49,7 +49,7 @@ namespace blackjack
       else if(answer == "n" || answer == "no" ||
               answer == "N" || answer == "NO")
       {
-        return true;
+        return false;
       }
     }
   }

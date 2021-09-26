@@ -5,10 +5,6 @@ namespace blackjack
 
   Hand::~Hand()
   {
-    for(auto& c: cards)
-    {
-      delete c;
-    }
   }
 
   int Hand::getTotal() const {
@@ -20,18 +16,15 @@ namespace blackjack
       else
         sum += c->GetValue();
     }
-    for(const auto& c: cards)
-      if(c->GetRank() == ACE)
-        sum -= 10;
+    if(sum > 21)
+      for(const auto& c: cards)
+        if(c->GetRank() == ACE)
+          sum -= 10;
     return sum;
   }
 
   void Hand::Clear()
   {
-    for(auto& pCard: cards)
-    {
-      delete pCard;
-    }
     cards.clear();
   }
 

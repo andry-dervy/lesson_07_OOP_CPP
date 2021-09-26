@@ -15,11 +15,11 @@ namespace blackjack
     int countCards;
   public:
     Deck();
-    ~Deck(){}
+    ~Deck();
     void Populate();
     void Shuffle();
     void Deal(Hand& aHand);
-    void AddltionalCards(GenericPlayer& aGenerlcPlayer);
+    bool AdditionalCards(GenericPlayer& aGenerlcPlayer);
   };
 
 }
